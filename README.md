@@ -1,1 +1,1 @@
-# k-means-cancer-detect
+# Cancer detection using K-Means algorithm.
