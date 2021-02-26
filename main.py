@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-from sklearn.cluster import KMeans
+from modules.kmeans import KMeans
 from sklearn.model_selection import train_test_split
 
 dataset = pd.read_csv('./data/data.csv')
@@ -12,7 +12,7 @@ labels = dataset[:, 1]
 X_train, X_test, y_train, y_test = train_test_split(features, labels, 
                                                     test_size=.30, shuffle=True)
 
-kmeans = KMeans(n_clusters=4).fit(X_train)
+kmeans = KMeans(k_clusters=4).fit(X_train)
 predictions = kmeans.predict(X_test)
 
 #for i in range(40):
