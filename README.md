@@ -1,6 +1,6 @@
 # Cancer detection using K-Means algorithm. 
  
-### Final run: 
+### Baseline using Sklearn: 
 | Cluster | Benign | Malignant |
 |---------|--------|-----------|
 | 0       | 95     | 4         |
