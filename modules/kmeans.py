@@ -7,6 +7,7 @@ class KMeans:
         self.centroids = None
 
     def fit(self, X):
+        # Select k different rows as centroids
         indexes = np.random.choice(X.shape[0], self.k, False)
         self.centroids = X[indexes]
 
@@ -17,14 +18,8 @@ class KMeans:
 
             for row in X:
                 # Assign row to nearest cluster
-                min_distance = math.inf
-                min_indx = math.inf
-                for i in range(self.k):
-                    d = dist_euclid(self.centroids[i], row)
-                    if d < min_distance:
-                        min_distance = d
-                        min_indx = i
-                clusters[min_indx].append(row)
+                nearest = find_centroid(self.centroids, row)
+                clusters[nearest].append(row)
             
             # Calculate new centroids
             new_centroids = []
@@ -39,18 +34,30 @@ class KMeans:
             else:
                 self.centroids = new_centroids
                 
-
-
         return self
     
     def predict(self, X):
-        result = np.zeros(X.shape)
+        result = np.full(X.shape[0], -1, dtype=np.int32)
 
-        # TODO predict X
-        
+        # Find nearest center for each row
+        for i in range(X.shape[0]):
+            nearest = find_centroid(self.centroids, X[i])
+            result[i] = nearest
+
         return result
+    
 
 def dist_euclid(vector1, vector2):
     d = vector2 - vector1
     sum_squared = np.sum(np.square(d))
     return np.sqrt(sum_squared)
+
+def find_centroid(centroids, vector):
+    min_distance = math.inf
+    min_indx = math.inf
+    for i in range(len(centroids)):
+        d = dist_euclid(centroids[i], vector)
+        if d < min_distance:
+            min_distance = d
+            min_indx = i
+    return min_indx
